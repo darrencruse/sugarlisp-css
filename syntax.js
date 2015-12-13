@@ -1,7 +1,7 @@
-var sl = require('sugarlisp-core/types'),
+var sl = require('sugarlisp-core/sl-types'),
     reader = require('sugarlisp-core/reader'),
     rfuncs = require('./readfuncs'),
-    corerfuncs = require('sugarlisp-core/readfuncs');
+    plusrfuncs = require('sugarlisp-plus/readfuncs');
 
 // WHAT YOU REALLY NEED IS A WAY TO SAY IF YOU SEE <style>
 // ENABLE THIS READTABLE ON THE FRONT OF THE LIST OF READTABLES
@@ -41,7 +41,7 @@ exports[';'] = reader.unexpected;
 
 exports['\"'] = function(source) {
   // a template string becomes either 'str' or (str...)
-  return corerfuncs.read_template_string(source, '"', '"', ['str']);
+  return plusrfuncs.read_template_string(source, '"', '"', ['str']);
 };
 
 // this is a good reference:  http://www.w3schools.com/css/css_selectors.asp

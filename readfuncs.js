@@ -1,6 +1,5 @@
-var sl = require('sugarlisp-core/types'),
+var sl = require('sugarlisp-core/sl-types'),
     reader = require('sugarlisp-core/reader'),
-    corerfuncs = require('sugarlisp-core/readfuncs'),
     debug = require('debug')('sugarlisp:css:syntax:info'),
     trace = require('debug')('sugarlisp:css:syntax:trace');
 
