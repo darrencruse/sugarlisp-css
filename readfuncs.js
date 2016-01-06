@@ -1,6 +1,6 @@
 var sl = require('sugarlisp-core/sl-types'),
     reader = require('sugarlisp-core/reader'),
-    debug = require('debug')('sugarlisp:css:syntax:info'),
+    debug = require('debug')('sugarlisp:css:syntax:debug'),
     trace = require('debug')('sugarlisp:css:syntax:trace');
 
 // read list of css selectors
