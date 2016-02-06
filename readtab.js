@@ -12,8 +12,8 @@ var sl = require('sugarlisp-core/sl-types'),
 // other question - how am I converting this to a tag?  this
 //   part belongs in the html module which can generate the tag
 //   *and* as a side effect also enable this readtable
-exports['<style>'] = function(source) {
-  return rfuncs.read_css_rules(source);
+exports['<style>'] = function(lexer) {
+  return rfuncs.read_css_rules(lexer);
 };
 
 // THEN LIKEWISE THAT WHEN YOU SEE </style> REMOVE THIS READTABLE
@@ -30,8 +30,8 @@ exports['</style>'] = reader.unexpected;
 // COMPILE FUNCTIONS SHOULD BE HANDLED MORE LIKE "SCOPES"
 // I.E. A DIALECT CAN ADD HANDLER FUNCTIONS THAT ONLY APPLY
 // WITHIN THE SCOPE OF ONE (OR ALL) OF *IT'S* EXPRESSIONS
-exports['{'] = function(source) {
-  return rfuncs.read_css_declaration_block(source);
+exports['{'] = function(lexer) {
+  return rfuncs.read_css_declaration_block(lexer);
 };
 exports['}'] = reader.unexpected;
 
@@ -39,9 +39,9 @@ exports[','] = reader.unexpected;
 
 exports[';'] = reader.unexpected;
 
-exports['\"'] = function(source) {
+exports['\"'] = function(lexer) {
   // a template string becomes either 'str' or (str...)
-  return plusrfuncs.read_template_string(source, '"', '"', ['str']);
+  return plusrfuncs.read_template_string(lexer, '"', '"', ['str']);
 };
 
 // this is a good reference:  http://www.w3schools.com/css/css_selectors.asp
@@ -63,26 +63,9 @@ exports.rulesafter = [
       // this is html elem, elem?.class, #id, or  (need to double check correctness)
       /([a-zA-Z0-9]+|([a-zA-Z0-9]+)?\.-?[_a-zA-Z]+[_a-zA-Z0-9-]*|\#[_a-zA-Z]+[a-zA-Z0-9_\-\:\.]+)/g,
     read:
-      function(source) {
-        return rfuncs.read_selector(source);
+      function(lexer) {
+        return rfuncs.read_selector(lexer);
       }
   }
 ];
 */
-
-exports.__nonterminatingchars = "-";
-
-/**
-* The default read function used when nothing in
-* readtable or readrules matches the current token.
-* (we just make a symbol from the next word)
-*/
-exports.__readdefault = reader.symbol;
-
-/**
-* The default read token function returns the
-* textual token passed to readdefault.
-*/
-exports.__readdefaulttoken = function(source) {
-  return source.next_word_token();
-}
